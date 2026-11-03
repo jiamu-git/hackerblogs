@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hacker Blogs · an independent blog catalog from 20 years of HN</title>
+<meta name="description" content="A catalog of independent blogs and the posts HN keeps citing, mined from twenty years and 49 million records.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231d1a17'/><text x='16' y='23' font-size='17' font-family='Georgia,serif' fill='%23f7f3ea' text-anchor='middle'>HB</text></svg>">
+</head>
+<body>
+
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="topbar">
+  <a class="brand" href="#" onclick="return false">
+    <span class="brand-mark" aria-hidden="true">HB</span>
+    <span class="brand-name">Hacker Blogs</span>
+  </a>
+  <div class="search-wrap">
+    <label class="sr-only" for="q" data-i18n="searchLabel">Search</label>
+    <input id="q" type="search" placeholder="Search domain, title, topic"
+           data-i18n-ph="searchPh" autocomplete="off" spellcheck="false">
+    <kbd id="kbd">/</kbd>
+  </div>
+  <div class="top-actions">
+    <div class="lang" role="group" aria-label="Language" data-i18n-aria="langLabel">
+      <button data-lang="en" class="is-on" aria-pressed="true">EN</button>
+      <button data-lang="zh" aria-pressed="false">中文</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <nav id="views" aria-label="Views">
+      <a class="nav-item is-active" data-view="posts" href="#posts" data-i18n="navPosts">Most-cited posts</a>
+      <a class="nav-item" data-view="all" href="#all" data-i18n="navAll">All blogs</a>
+      <a class="nav-item" data-view="feed" href="#feed" data-i18n="navFeed">Subscribable</a>
+    </nav>
+
+    <div class="side-sec">
+      <div class="side-title" data-i18n="sideTopics">Topics</div>
+      <div id="topics" class="topic-list"></div>
+    </div>
+
+    <div class="side-sec">
+      <div class="side-title" data-i18n="sideEras">First seen</div>
+      <div id="eras" class="era-list"></div>
+    </div>
+
+    <div class="side-foot">
+      <div class="fig"><b id="s-blogs">0</b><span data-i18n="figBlogs">blogs</span></div>
+      <div class="fig"><b id="s-posts">0</b><span data-i18n="figPosts">posts</span></div>
+      <div class="fig"><b>49.3M</b><span data-i18n="figRecords">raw records</span></div>
+      <div class="side-title dl-title" data-i18n="dlTitle">Subscribe by RSS</div>
+      <a class="dl" href="data/hn-blogs.opml" download>
+        <span class="dl-ico" aria-hidden="true">↓</span>
+        <span class="dl-txt" data-i18n="dlAll">Download all 2,241 sites</span>
+      </a>
+      <a class="dl" href="data/hn-blogs-top300.opml" download>
+        <span class="dl-ico" aria-hidden="true">↓</span>
+        <span class="dl-txt" data-i18n="dlTop">Download top 300 sites</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+    <section id="all-view" hidden>
+      <div class="page-head">
+        <h1 id="all-title">All blogs</h1>
+        <p id="all-sub"></p>
+      </div>
+      <div class="chips" id="all-chips">
+        <div class="chip-group"><span class="chip-label" data-i18n="chipFeed">Feed</span>
+          <button class="chip is-on" data-f="all" data-i18n="chipAll">All</button>
+          <button class="chip" data-f="feed" data-i18n="chipHasFeed">Has RSS</button>
+        </div>
+        <div class="chip-group"><span class="chip-label" data-i18n="chipFirstSeen">First seen</span>
+          <button class="chip is-on" data-e="0" data-i18n="chipAny">Any</button>
+          <button class="chip" data-e="2010" data-i18n="chipPre2010">Before 2010</button>
+          <button class="chip" data-e="2020" data-i18n="chip2010s">2010s</button>
+          <button class="chip" data-e="9999" data-i18n="chip2020s">2020s</button>
+        </div>
+        <div class="chip-group"><span class="chip-label" data-i18n="chipType">Type</span>
+          <button class="chip is-on" data-c="personal" data-i18n="chipPersonal">Personal</button>
+          <button class="chip" data-c="all" data-i18n="chipAllSites">All sites</button>
+        </div>
+        <div class="sortwrap">
+          <label for="sort" data-i18n="sortLabel">Sort</label>
+          <select id="sort">
+            <option value="score" data-i18n="sortScore">Composite</option>
+            <option value="p90" data-i18n="sortP90">Post quality p90</option>
+            <option value="years" data-i18n="sortYears">Active years</option>
+            <option value="mentions" data-i18n="sortMentions">Mentions</option>
+            <option value="az" data-i18n="sortAz">Domain A-Z</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid" id="all-grid"></div>
+      <button id="more" class="more-btn" hidden>Load more</button>
+    </section>
+
+    <section id="posts-view">
+      <div class="page-head">
+        <h1 data-i18n="postsTitle">Most-cited posts</h1>
+        <p data-i18n="postsLead">Ranked by how many distinct years a URL was cited. Four per site at most. Fifteen years of repeats is what makes a classic.</p>
+      </div>
+      <p class="result-count" id="posts-sub"></p>
+      <div class="chips" id="post-chips">
+        <div class="chip-group" id="post-topics"></div>
+        <div class="chip-group"><span class="chip-label" data-i18n="postsSpan">Span</span>
+          <button class="chip is-on" data-p="0" data-i18n="chipAny">Any</button>
+          <button class="chip" data-p="5" data-i18n="span5">Five years</button>
+          <button class="chip" data-p="10" data-i18n="span10">Ten years</button>
+          <button class="chip" data-p="15" data-i18n="span15">Fifteen years</button>
+        </div>
+      </div>
+      <ol class="postlist" id="post-list"></ol>
+      <nav class="pager" id="post-pager" aria-label="Pagination"></nav>
+    </section>
+  </main>
+
+  <aside class="drawer" id="drawer" hidden>
+    <button class="drawer-x" aria-label="Close" data-i18n="close">Close</button>
+    <div id="drawer-body"></div>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

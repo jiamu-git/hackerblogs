@@ -1,0 +1,25 @@
+# raw dataset (12 GB)
+hacker-news/
+_hn_tree.json
+download_hn.log
+
+# python env
+.venv-hf/
+__pycache__/
+*.pyc
+
+# pipeline intermediates
+blogs/*.parquet
+blogs/domains.json
+blogs/ranked.csv
+blogs/posts_global.csv
+blogs/posts_from_list.csv
+blogs/top_from_list.csv
+blogs/top_global.csv
+blogs/*.log
+blogs/liveness.json
+
+# scratch
+_speedtest/
+_t16/
+.DS_Store
